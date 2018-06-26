@@ -2,6 +2,7 @@ package data;
 
 import util.PurgeString;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class NaiveBayes {
@@ -29,38 +30,6 @@ public class NaiveBayes {
     }
 
     public double positiveProbability(final String input) {
-        /*String sentence = new String(input).toLowerCase();
-        String[] allSentence = PurgeString.stringToVector(sentence);
-        boolean negative = false;
-        double positive, result = 0;
-
-        for(int i=0; i < allSentence.length; i++) {
-            String[] vectorString = allSentence[i].split(" ");
-            for(int j=0; j < vectorString.length; j++) {
-                String word = vectorString[j];
-                if(word.equals("not") || word.indexOf("n't") != -1) {
-                    if( j+1 < vectorString.length &&
-                            (negativeCounter.frequency(vectorString[j+1]) < positiveCounter.frequency(vectorString[j+1]))){
-                        negative = true;
-                    }
-                }else if (word.equals("but")) {
-                    if (negative == false) {
-                        negative = true;
-                    }else negative = false;
-                }
-
-                positive = negativeCounter.frequency(word);
-                if (negative = true) {
-                    positive = 0;
-                }
-
-                if(positive != 0) result += Math.log(positive) / allCounter.logarithmicFrequency(word);
-            }
-            negative = false;
-        }
-
-
-        return result;*/
 
         String sentence = new String(input).toLowerCase();
         sentence = PurgeString.trainingRemovePunctuationSymbols(sentence);
@@ -80,37 +49,6 @@ public class NaiveBayes {
     }
 
     public double negativeProbability(final String input) {
-       /* String sentence = new String(input).toLowerCase();
-        String[] allSentence = PurgeString.stringToVector(sentence);
-        boolean positive = false;
-        double negative, result = 0;
-
-        for(int i=0; i < allSentence.length; i++) {
-            String[] vectorString = allSentence[i].split(" ");
-            for(int j=0; j < vectorString.length; j++) {
-                String word = vectorString[j];
-                if(word.equals("not") || word.indexOf("n't") != -1) {
-                    if( j+1 < vectorString.length &&
-                            (negativeCounter.frequency(vectorString[j+1]) > positiveCounter.frequency(vectorString[j+1]))){
-                        positive = true;
-                    }
-                }else if (word.equals("but")) {
-                    if (positive == false) {
-                        positive = true;
-                    }else positive = false;
-                }
-
-                negative = negativeCounter.frequency(word);
-                /*if (positive = true) {
-                    negative = 0;
-                }
-
-                if(negative != 0) result += Math.log(negative) / allCounter.logarithmicFrequency(word);
-            }
-            positive = false;
-        }
-
-        return result;*/
 
         String sentence = new String(input).toLowerCase();
         sentence = PurgeString.trainingRemovePunctuationSymbols(sentence);
@@ -123,7 +61,7 @@ public class NaiveBayes {
         }
         for (int i=0 ; i<vectorString.length-1 ; i++){
             String twoWords = vectorString[i] + " " +vectorString[i+1];
-            negative = positiveCounter.frequency(twoWords);
+            negative = negativeCounter.frequency(twoWords);
             if (negative != 0) result += Math.log(negative) / allCounter.logarithmicFrequency(twoWords);
         }
         return result;
@@ -131,11 +69,54 @@ public class NaiveBayes {
     }
 
     public int sentimentScore(final String input) {
-        String sentence = new String(input).toLowerCase();
+        double scorePositive = 0;
+        double scoreNegative = 0;
 
+        String[] sentences = PurgeString.stringToVector(new String(input).toLowerCase());
+        List<Frase> allSentences = new LinkedList<Frase>();
 
-        if(positiveProbability(sentence) > negativeProbability(sentence)) return 1;
-        return 0;
+        //creamos las Frases y las añadimos en una lista
+        for(int i=0; i < sentences.length; i++){
+            allSentences.add( new Frase(sentences[i]));
+        }
+
+        //obtendremos la puntuación de cada frase de la lista
+        for (Frase sentence : allSentences){
+
+            //String de la frase
+            String words = sentence.getSentence();
+
+            //si la frase contiene alguna negación
+            if (sentence.containsNOT() == true){
+               String notSentence = sentence.getSubstringWithNot();
+
+               //se comprueba que al usar not anula una palabra que de normal sería mala y viceversa
+                String[] word = notSentence.split(" ", 1);
+               if(negativeCounter.frequency(word[0]) > positiveCounter.frequency(word[0])) {
+                   //ej. not boring
+                   scorePositive += positiveProbability(notSentence);
+               }else{
+                   //ej. not like
+                   scorePositive += positiveProbability(notSentence);
+               }
+
+               /*la frase sin la negación se analizará igual que las demás
+               (sacando la prob. de positivo y prob negativo)
+                */
+               words = sentence.getSubstringWithoutNot();
+            }
+
+            scoreNegative += negativeProbability(words);
+            scorePositive += positiveProbability(words);
+
+        }
+
+        if (scoreNegative > scorePositive) {
+            return 0;
+        }
+
+        return 1;
+
     }
 
     public double test() {
