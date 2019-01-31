@@ -4,8 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.*;
+//import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.core.Is.*;
+import static org.junit.Assert.assertThat;
 
 public class SentencesGroupperTest {
     @Test

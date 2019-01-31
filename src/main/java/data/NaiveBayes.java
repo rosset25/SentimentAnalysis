@@ -16,7 +16,7 @@ public class NaiveBayes {
     }
 
     public void initialize(String fileName) {
-        dt = new DataReader(fileName, 80);
+        dt = new DataReader(fileName, 75);
 //        List<DataReader.SentenceSentimentScore> result = dt.process();
         dt.process();
 //        SentencesGroupper gs = new SentencesGroupper(result);
@@ -97,7 +97,7 @@ public class NaiveBayes {
                    scorePositive += positiveProbability(notSentence);
                }else{
                    //ej. not like
-                   scorePositive += positiveProbability(notSentence);
+                   scoreNegative += positiveProbability(notSentence);
                }
 
                /*la frase sin la negación se analizará igual que las demás
