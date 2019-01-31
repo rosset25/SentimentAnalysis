@@ -37,6 +37,8 @@ Now you are ready to run *NaiveBayesTest* class. As we said before, our project 
 The tests show us what percentage of sentences the classifier get right, depending on size of our database and which percentage of it is used to the treining. By default, an 75% of the database is used for training.
 
 ## Authors
+
+* **Oscar Belmonte** (teacher) - *Initial work* 
 * **Rosa Maria de Juan** - *improvements*
 * **Zayda Granell** - *Improvements*
-* **Oscar Belmonte** - *Initial work* (teacher)
+
