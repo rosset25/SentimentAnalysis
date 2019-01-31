@@ -1,13 +1,33 @@
-# SentimentAnalysis
+# Sentiment Analysis
 
-Este programa es una pequeña muestra de un clasificador de frases (según sean positivas o negativas). Para ello hemos utilizado el teorema de Bayes con la finalidad de medir la probabilidad de aparición de las palabras en frases positivas o negativas. 
-Mediante el uso de tres sets distintos de frases para el entrenamiento y posterior testeo, se ha logrado conseguir un porcentage elevado de aciertos. Aunque este test se puede probar con otras bases de datos con el mismo formato que las usadas para el testeo.
+This program is a simple phrase classifier (positives or negatives), based on Bayes' theorem. To train this classifier we used three different databases with positive and negative sentences.
 
 
-Esta versión del programa incluye una mejora que tiene en cuenta las negaciones, por ejemplo: 
+## Getting Started
 
-I don't like this movie. / I do not like this movie. 
+Clone the repository and open the project with Intellij. You can also use another IDE, such a Eclipse. How running the program and the tests are shown in the sections below.
 
--> A partir de la negación (n't o not) sólo tendremos en cuenta los porcentajes contrarios a la palabra
-seguida de la negación, es decir, "like", como palabra usualmente positiva, pasaría a contar sólo su
-porcentje negativo junto con las palabras que le siguieran hasta un "." o ",".
+
+### Prerequisites
+
+Java SE Development Kit 8 installation is required. 
+
+### Installing
+
+To install the JDK: https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html?ssSourceSiteId=otnes
+
+## Running the test
+
+The following steps explain how configure JUnit 5.0 for Intellij. If you are using another IDE, such Eclipse, please search the pertinent information and configure it before running the tests.
+Remember, our program uses JUnit 5.0 version. 
+
+  * Open the project
+  * Press ``` Control+Alt+Mayus+S``` or ```File -> Project Stucture```
+  * Select ```Libraries```
+  * Press ```+``` and select ```From Maven...```
+  * Search ```org.junit.jupiter:junit-jupiter-api:5.0.0``` and then OK
+  
+Now you are ready to run *NaiveBayesTest* class. As we said before, our project uses three different databases that are saved in the *resources* folder. However, feel free to change and use other databases with *(sentence).  (pos/neg)* schema, such the following one:
+```Wow... Loved this place.	1
+   Crust is not good.	0 ```
+
