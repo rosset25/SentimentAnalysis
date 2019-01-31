@@ -27,7 +27,7 @@ Remember, our program uses JUnit 5.0 version.
   * Press ```+``` and select ```From Maven...```
   * Search ```org.junit.jupiter:junit-jupiter-api:5.0.0``` and then OK
   
-Now you are ready to run *NaiveBayesTest* class. As we said before, our project uses three different databases that are saved in the *resources* folder. However, feel free to change and use other databases with *(sentence).  (pos/neg)* schema, such the following one:
+Now you are ready to run *NaiveBayesTest* class. As we said before, our project uses three different databases that are saved in the *resources* folder. However, feel free to change and use other databases with [*(sentence).  (pos/neg)*] schema, such the following one:
 
 ```Wow... Loved this place.	1```
 ```Crust is not good.	0 ```
