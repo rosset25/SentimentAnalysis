@@ -32,7 +32,7 @@ Now you are ready to run *NaiveBayesTest* class. As we said before, our project 
 ```Wow... Loved this place.	1```
 ```Crust is not good.	0 ```
 
-###Coding style tests
+### Coding style tests
 
 The tests show us what percentage of sentences the classifier get right, depending on size of our database and which percentage of it is used to the treining. By default, an 75% of the database is used for training.
 
